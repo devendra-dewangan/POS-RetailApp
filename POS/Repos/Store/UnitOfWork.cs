@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using POS.Data;
+using POS.Repos.Attendance;
 
 namespace POS.Repos
 {
@@ -34,6 +35,14 @@ namespace POS.Repos
 
         private IImportInfoRepo? _importInfos;
         public IImportInfoRepo ImportInfos => _importInfos ??= new ImportInfoRepo(context);
+
+        private IAttendanceDayRepo? _attendanceDays;
+        public IAttendanceDayRepo AttendanceDays => _attendanceDays ??= new AttendanceDayRepo(context);
+
+        private IAttendancePunchRepo? _attendancePunches;
+        public IAttendancePunchRepo AttendancePunches => _attendancePunches ??= new AttendancePunchRepo(context);
+
+        private IAttendancePunchRepo? _attendancePunchs;
 
         public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {

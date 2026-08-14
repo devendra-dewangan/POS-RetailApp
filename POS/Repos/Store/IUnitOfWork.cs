@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage;
+using POS.Repos.Attendance;
 
 namespace POS.Repos
 {
@@ -14,6 +15,8 @@ namespace POS.Repos
         IRefreshTokenRepo RefreshTokens { get; }
         IPurchaseItemRepo PurchaseItems { get; }
         IImportInfoRepo ImportInfos { get; }
+        IAttendanceDayRepo AttendanceDays { get; }
+        IAttendancePunchRepo AttendancePunches { get; }
 
         Task<int> CommitAsync(CancellationToken cancellationToke = default);
         Task<IDbContextTransaction> BeginTransactionAsync();

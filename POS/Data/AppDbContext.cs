@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using POS.Entity;
+using POS.Entity.Attendance;
 
 namespace POS.Data
 {
@@ -26,6 +27,9 @@ namespace POS.Data
         public DbSet<ImportInfo> ImportInfos { get; set; }
         
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+        public DbSet<AttendanceDay> AttendanceDays { get; set; }
+        public DbSet<AttendancePunch> AttendancePunches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -157,6 +161,27 @@ namespace POS.Data
                 entity.Property(e => e.CreatedByIp).IsRequired().HasMaxLength(45);
                 entity.Property(e => e.Revoked).IsRequired(false);
                 entity.Property(e => e.RevokedByIp).IsRequired(false).HasMaxLength(45);
+            });
+
+            modelBuilder.Entity<AttendanceDay>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.EmployeeId).IsRequired();
+                entity.Property(e => e.Date).IsRequired();
+                entity.HasMany(e => e.Punches)
+                      .WithOne()
+                      .HasForeignKey(p => p.AttendanceDayId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<AttendancePunch>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.PunchTime).IsRequired();
+                entity.Property(e => e.Type).IsRequired();
+                entity.Property(e => e.Source).IsRequired();
+                entity.Property(e => e.IsDeleted).IsRequired();
+                entity.Property(e => e.EditReason).HasMaxLength(500);
             });
 
             base.OnModelCreating(modelBuilder);
