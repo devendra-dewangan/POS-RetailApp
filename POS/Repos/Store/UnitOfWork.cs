@@ -11,10 +11,13 @@ namespace POS.Repos
         public IProductRepo Products => _products ??= new ProductRepo(context);
 
         private IProductBatchRepo? _batches;
-        public IProductBatchRepo Batches => _batches ??= new ProductBatchRepo(context);
+        public IProductBatchRepo ProductBatches => _batches ??= new ProductBatchRepo(context);
+
+        private IInvoiceRepo? _invoice;
+        public IInvoiceRepo Invoices => _invoice ??= new InvoiceRepo(context);
 
         private IInvoiceItemRepo? _saleItems;
-        public IInvoiceItemRepo SaleItems => _saleItems ??= new InvoiceItemRepo(context);
+        public IInvoiceItemRepo InvoiceItems => _saleItems ??= new InvoiceItemRepo(context);
 
         private ISaleRepo? _sales;
         public ISaleRepo Sales => _sales ??= new SaleRepo(context);
@@ -40,7 +43,6 @@ namespace POS.Repos
         private IAttendancePunchRepo? _attendancePunches;
         public IAttendancePunchRepo AttendancePunches => _attendancePunches ??= new AttendancePunchRepo(context);
 
-        private IAttendancePunchRepo? _attendancePunchs;
 
         public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {

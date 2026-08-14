@@ -45,7 +45,8 @@ namespace POS.Controllers
         public async Task<ActionResult> AddPurchaseItem(int purchaseCartId, [FromBody] AddPurchaseItemRequestDto request)
         {
             // Implementation for adding a purchase item to a purchase cart
-            return Ok();
+            var result = await _purchaseService.AddPurchaseItemAsync(purchaseCartId, request);
+            return Ok(result);
         }
 
         [HttpPost("{purchaseCartId}/batches")]

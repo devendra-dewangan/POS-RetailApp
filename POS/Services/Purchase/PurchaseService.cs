@@ -25,8 +25,19 @@ namespace POS.Services
             {
                 Purchase = new PurchaseInvoice
                 {
-                    Supplier = supplier
-                }
+                    Supplier = supplier,
+                    Invoice = new Invoice
+                    {
+                        InvoiceNumber = $"INV-{DateTime.UtcNow.Ticks}",
+                        InvoiceDate = DateTime.UtcNow,
+                        InvoiceItems = []
+                    }
+
+                },
+                Status = CartStatus.Open,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+
             };
             _liteStore.PurchaseCarts.Upsert(purchase);
             return purchase.Id;
@@ -35,11 +46,15 @@ namespace POS.Services
         public async Task<PurchaseInvoice> CompletePurchaseAsync(int purchaseCartId)
         {
             var purchaseCart = _liteStore.PurchaseCarts.FindById(purchaseCartId);
-            if (purchaseCart == null || purchaseCart.Status == CartStatus.Completed)
+            if (purchaseCart == null || purchaseCart.Status != CartStatus.Open)
                 throw new InvalidOperationException("Invalid purchase cart.");
 
+            purchaseCart.Status = CartStatus.Locked;
+            _liteStore.PurchaseCarts.Update(purchaseCart);
+
+
             var purchase = purchaseCart.Purchase!;
-            var purchaseItems = purchase.Invoice.InvoiceItems;
+            var purchaseItems = purchase.Invoice!.InvoiceItems;
             var productIds = purchaseItems.Select(i => i.ProductId).Distinct().ToList();
             var products = await _unitOfWork.Products.GetByIdsAsync(productIds);
             var productDict = products!.ToDictionary(p => p.Id);
@@ -48,15 +63,13 @@ namespace POS.Services
             try
             {
                 //todo
-                //purchase.PurchaseDate = DateTime.UtcNow;
-                //purchase.InvoiceNumber = $"INV-{DateTime.UtcNow.Ticks}";
-
-                //foreach (var item in purchaseItems)
+                foreach (var item in purchaseItems)
+                { 
                 //{
                 //    // Ensure relationship
                 //    item.Purchase = purchase;
 
-                //    foreach (var batch in item.Batches)
+                //    foreach (var batch in item.Batch)
                 //    {
                 //        batch.ProductId = item.ProductId;
                 //        batch.PurchaseItem = item;
@@ -65,8 +78,8 @@ namespace POS.Services
                 //    if (!productDict!.TryGetValue(item.ProductId, out var product))
                 //        throw new Exception($"Product not found: {item.ProductId}");
 
-                //    product.TotalStock += item.Quantity;
-                //}
+                    //product.TotalStock += item.Quantity;
+                }
 
                 await _unitOfWork.Purchases.AddAsync(purchase);
                 await _unitOfWork.CommitAsync();
@@ -91,22 +104,20 @@ namespace POS.Services
         }
 
 
-        public async Task<IEnumerable<PurchaseInvoice>> GetPurchasesByInvoiceNumbersAsync(IEnumerable<string> invoiceNumbers)
-        {
-            return await _unitOfWork.Purchases.GetByInvoiceNumbersAsync(invoiceNumbers) ?? [];
-        }
 
-        public async Task<IEnumerable<PurchaseInvoice>?> GetPurchaseByInvoiceAsync(string invoiceNumber)
+        public async Task<IEnumerable<PurchaseInvoice>> GetPurchaseByInvoiceAsync(string invoiceNumber)
         {
-            var purchases = await _unitOfWork.Purchases.GetByInvoiceNumberAsync(invoiceNumber);
+            var invoice = await _unitOfWork.Invoices.GetInvoiceByInvoiceNumber(invoiceNumber);
+            var purchases = await _unitOfWork.Purchases.GetByInvoiceIdsAsync(invoice.Select(x => x.Id));
             return purchases ?? [];
         }
 
         public async Task<PurchaseInvoice?> AddPurchaseItemAsync(int purchaseDraftId, AddPurchaseItemRequestDto request)
         {
+
             var purchaseCart = _liteStore.PurchaseCarts.FindById(purchaseDraftId);
 
-            if (purchaseCart == null || purchaseCart.Status == CartStatus.Completed)
+            if (purchaseCart == null || purchaseCart.Status != CartStatus.Open)
                 throw new InvalidOperationException("Invalid purchase cart.");
 
             var purchase = purchaseCart.Purchase!;
@@ -114,93 +125,25 @@ namespace POS.Services
             var product = await _unitOfWork.Products.GetByIDAsync(request.ProductId)
                 ?? throw new InvalidOperationException("Product not found.");
 
-            // ✅ Validation
-            if (request.Quantity <= 0)
-                throw new InvalidOperationException("Quantity must be greater than zero.");
 
-            if (request.UnitPrice <= 0)
-                throw new InvalidOperationException("Invalid price.");
-
-            // 🔥 Check if item already exists
-            var existingItem = purchase.Invoice.InvoiceItems
-                .FirstOrDefault(i => i.ProductId == request.ProductId);
-
-            if (existingItem != null)
-            {
-                // 👉 Option 1: Update existing
-                purchase.Invoice.InvoiceItems.Remove(existingItem);
-            }
-
-            //todo
             // ✅ Create new PurchaseItem
-            //var purchaseItem = new PurchaseItem
-            //{
-            //    ProductId = request.ProductId,
-            //    Quantity = request.Quantity,
-            //    PurchaseRate = request.UnitPrice,
-            //    Batches = []
-            //};
+            var purchaseItem = new InvoiceItem
+            {
+                ProductId = request.ProductId,
+                Batch = new ProductBatch
+                {
+                    BatchNumber = request.Batch.BatchNumber,
+                    RemainingStock = request.Batch.Quantity,
+                    OpeningStock = request.Batch.Quantity,
+                    MRP = request.Batch.MRP,
+                    SaleRate = request.Batch.SalePrice,
+                    ProductId = request.ProductId,
+                },
+            };
 
-            //// ✅ Add batches
-            //if (request.Batches != null && request.Batches.Any())
-            //{
-            //    foreach (var batchDto in request.Batches)
-            //    {
-            //        purchaseItem.Batches.Add(new ProductBatch
-            //        {
-            //            BatchNumber = batchDto.BatchNumber,
-            //            RemainingStock = batchDto.Quantity,
-            //            OpeningStock = batchDto.Quantity,
-            //            MRP = batchDto.MRP,
-            //            SaleRate = request.UnitPrice,
-            //            ProductId = request.ProductId,        
-            //        });
-            //    }
-            //}
-            //else
-            //{
-            //    purchaseItem.Batches.Add(new ProductBatch
-            //    {
-            //        BatchNumber = $"BATCH-{DateTime.UtcNow.Ticks}",
-            //        RemainingStock = request.Quantity,
-            //        OpeningStock = request.Quantity,
-            //        MRP = request.UnitPrice,
-            //        SaleRate = request.UnitPrice,
-            //        ProductId = request.ProductId,          
-            //    });
-            //}
-            //// ✅ Add batches
-            //if (request.Batches != null && request.Batches.Any())
-            //{
-            //    foreach (var batchDto in request.Batches)
-            //    {
-            //        purchaseItem.Batches.Add(new ProductBatch
-            //        {
-            //            BatchNumber = batchDto.BatchNumber,
-            //            RemainingStock = batchDto.Quantity,
-            //            OpeningStock = batchDto.Quantity,
-            //            MRP = batchDto.MRP,
-            //            SaleRate = request.UnitPrice,
-            //            ProductId = request.ProductId,        
-            //        });
-            //    }
-            //}
-            //else
-            //{
-            //    purchaseItem.Batches.Add(new ProductBatch
-            //    {
-            //        BatchNumber = $"BATCH-{DateTime.UtcNow.Ticks}",
-            //        RemainingStock = request.Quantity,
-            //        OpeningStock = request.Quantity,
-            //        MRP = request.UnitPrice,
-            //        SaleRate = request.UnitPrice,
-            //        ProductId = request.ProductId,          
-            //    });
-            //}
 
-            //Todo
-            // ✅ Add to purchase
-            //purchase.PurchaseItems.Add(purchaseItem);
+            purchase.Invoice!.InvoiceItems.Add(purchaseItem);
+            purchaseCart.UpdatedAt = DateTime.UtcNow;
 
             // Save in LiteDB (draft)
             _liteStore.PurchaseCarts.Update(purchaseCart);

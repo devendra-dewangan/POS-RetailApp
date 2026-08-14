@@ -43,7 +43,8 @@ namespace POS.Services
             // 3️⃣ Query database ONCE
             var suppliersFromDb = await _unitOfWork.Suppliers.GetByNamesAsync(supplierNames);
             var productsFromDb = await _unitOfWork.Products.GetByBarcodesAsync(barcodes);
-            var purchasesFromDb = await _unitOfWork.Purchases.GetByInvoiceNumbersAsync(invoices);
+            //todo
+            var purchasesFromDb = new List<PurchaseInvoice>();//await _unitOfWork.Purchases.GetByInvoiceNumbersAsync(invoices);
 
             // 4️⃣ Build dictionaries
             var supplierCache = (suppliersFromDb ?? [])

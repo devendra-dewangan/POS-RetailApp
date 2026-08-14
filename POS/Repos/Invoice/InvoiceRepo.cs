@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using POS.Data;
+using POS.Entity.Inovice;
 
 namespace POS.Repos.Invoice
 {
@@ -36,6 +37,11 @@ namespace POS.Repos.Invoice
         public async Task<Entity.Inovice.Invoice?> GetByIDAsync(int id)
         {
             return await _context.Invoices.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Entity.Inovice.Invoice>> GetInvoiceByInvoiceNumber(string invoiceNumber)
+        {
+            return await _context.Invoices.Where(i => i.InvoiceNumber == invoiceNumber).ToListAsync();
         }
 
         public async Task UpdateAsync(Entity.Inovice.Invoice value)

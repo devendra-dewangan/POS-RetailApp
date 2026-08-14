@@ -7,9 +7,8 @@
         public Product? Product { get; set; }
         public int BatchId { get; set; }
         public ProductBatch? Batch { get; set; }
-
-        public int Quantity { get; set; }
-        public Decimal Price { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal Price { get; set; }
 
     }
 }

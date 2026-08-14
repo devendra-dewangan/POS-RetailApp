@@ -45,7 +45,7 @@ namespace POS.Services
             var saleItems = saleCart.Items;
             //Todo
             //saleItems.ForEach(item => item.SaleId = sale.Id); // Update the cart with the saved purchase (with ID)
-            await _unitOfWork.SaleItems.AddBulkAsync(saleItems);
+            await _unitOfWork.InvoiceItems.AddBulkAsync(saleItems);
             await _unitOfWork.CommitAsync();
 
             // Update the cart status
@@ -73,7 +73,7 @@ namespace POS.Services
             if (saleCart == null || saleCart.Status == CartStatus.Completed)
                 throw new InvalidOperationException("Invalid sale cart.");
 
-            var batch = await _unitOfWork.Batches.GetByIDAsync(batchId) 
+            var batch = await _unitOfWork.ProductBatches.GetByIDAsync(batchId) 
                     ?? throw new InvalidOperationException("Insufficient stock in the batch.");
             //todo
             //var saleItem = new SaleItem

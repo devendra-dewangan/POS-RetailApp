@@ -7,8 +7,9 @@ namespace POS.Repos
     public interface IUnitOfWork
     {
         IProductRepo Products {get;}
-        IProductBatchRepo Batches {get;}
-        IInvoiceItemRepo SaleItems {get;}
+        IProductBatchRepo ProductBatches {get;}
+        IInvoiceRepo Invoices {get;}
+        IInvoiceItemRepo InvoiceItems {get;}
         ISaleRepo Sales {get;}
         IBuyerRepo Buyers {get;}
         ISupplierRepo Suppliers {get;}
