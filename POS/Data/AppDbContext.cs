@@ -33,6 +33,8 @@ namespace POS.Data
 
         public DbSet<Person> Persons { get; set; }
 
+        public DbSet<Invoice> Invoices { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Product entity
@@ -150,6 +152,13 @@ namespace POS.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.InvoiceNumber).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.InvoiceDate).IsRequired();
             });
 
             base.OnModelCreating(modelBuilder);
