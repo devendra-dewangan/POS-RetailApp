@@ -1,3 +1,4 @@
+
 using POS.Entity;
 
 namespace POS.Repos

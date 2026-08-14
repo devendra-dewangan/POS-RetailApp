@@ -1,5 +1,6 @@
 using NetTopologySuite.Index.HPRtree;
 using POS.Entity;
+using POS.Entity.Person;
 using POS.Repos;
 
 namespace POS.Services
@@ -45,7 +46,7 @@ namespace POS.Services
 
             // 4️⃣ Build dictionaries
             var supplierCache = (suppliersFromDb ?? [])
-                .ToDictionary(s => s.Name, StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(s => s.SupplierCode, StringComparer.OrdinalIgnoreCase);
 
             var productCache = (productsFromDb ?? [])
                 .ToDictionary(p => p.Barcode, StringComparer.OrdinalIgnoreCase);
@@ -59,7 +60,7 @@ namespace POS.Services
                 {
                     supplier = new Supplier
                     {
-                        Name = record.SupplierName
+                        SupplierCode = record.SupplierName
                     };
 
                     supplierCache[record.SupplierName] = supplier;

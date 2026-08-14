@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using POS.Entity;
 using POS.Entity.Attendance;
+using POS.Entity.Person;
 
 namespace POS.Data
 {
@@ -95,7 +96,10 @@ namespace POS.Data
             modelBuilder.Entity<Supplier>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.HasOne(e => e.Person)
+                      .WithOne(p => p.Supplier)
+                      .HasForeignKey<Supplier>(s => s.PersonId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // Configure Batch entity
@@ -120,7 +124,10 @@ namespace POS.Data
             modelBuilder.Entity<Buyer>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.HasOne(e => e.Person)
+                      .WithOne(p => p.Buyer)
+                      .HasForeignKey<Buyer>(b => b.PersonId)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // Configure ImportInfo entity
@@ -182,6 +189,12 @@ namespace POS.Data
                 entity.Property(e => e.Source).IsRequired();
                 entity.Property(e => e.IsDeleted).IsRequired();
                 entity.Property(e => e.EditReason).HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
             });
 
             base.OnModelCreating(modelBuilder);

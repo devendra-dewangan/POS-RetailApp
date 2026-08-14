@@ -3,6 +3,7 @@ using POS.Data;
 using POS.Entity;
 using POS.Services;
 using Microsoft.EntityFrameworkCore;
+using POS.Entity.Person;
 
 namespace POS.UnitTests.Mocks
 {

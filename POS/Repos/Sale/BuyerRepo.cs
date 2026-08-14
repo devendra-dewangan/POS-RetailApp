@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using POS.Data;
-using POS.Entity;
+using POS.Entity.Person;
 
 namespace POS.Repos
 {
@@ -35,7 +35,7 @@ namespace POS.Repos
 
         public async Task<IEnumerable<Buyer>?> GetByNameAsync(string name)
         {
-            return await _context.Buyers.Where(x=>x.Name.Contains(name)).ToListAsync();
+            throw new NotImplementedException();
         }
 
         public Task<Buyer?> GetByIDAsync(int id)

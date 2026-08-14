@@ -1,4 +1,4 @@
-using POS.Entity;
+using POS.Entity.Person;
 
 namespace POS.Services
 {

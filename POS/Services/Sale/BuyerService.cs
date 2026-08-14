@@ -1,4 +1,4 @@
-using POS.Entity;
+using POS.Entity.Person;
 using POS.Repos;
 
 namespace POS.Services
@@ -16,7 +16,7 @@ namespace POS.Services
         {
             var buyer = new Buyer
             {
-                Name = name
+                BuyerCode = name
             };
 
             await _unitOfWork.Buyers.AddAsync(buyer);

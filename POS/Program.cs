@@ -6,9 +6,9 @@ using LiteDB;
 using POS.Repos;
 using POS.Middleware;
 using Microsoft.AspNetCore.Identity;
-using POS.Entity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using POS.Entity.Person;
 
 var builder = WebApplication.CreateBuilder(args);
 

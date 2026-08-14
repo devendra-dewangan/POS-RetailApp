@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using POS.Entity;
+using POS.Entity.Person;
 using POS.Repos;
 
 namespace POS.Services
@@ -61,9 +62,7 @@ namespace POS.Services
             var user = new User
             {
                 UserName = dto.UserName,
-                Email = dto.Email,
-                FullName = dto.FullName,
-                EmployeeCode = dto.EmployeeCode
+                Email = dto.Email
             };
 
             var result = await _userManager.CreateAsync(user, dto.Password);

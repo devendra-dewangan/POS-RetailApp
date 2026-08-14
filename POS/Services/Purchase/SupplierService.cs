@@ -1,4 +1,4 @@
-using POS.Entity;
+using POS.Entity.Person;
 using POS.Repos;
 
 namespace POS.Services
@@ -18,7 +18,7 @@ namespace POS.Services
         {
             var supplier = new Supplier
             {
-                Name = supplierName
+                SupplierCode = supplierName
             };
 
             await _unitOfWork.Suppliers.AddAsync(supplier);
@@ -39,7 +39,7 @@ namespace POS.Services
             // Create new supplier
             supplier = new Supplier
             {
-                Name = supplierName
+                SupplierCode = supplierName
             };
 
             await _unitOfWork.Suppliers.AddAsync(supplier);
