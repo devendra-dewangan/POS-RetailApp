@@ -32,6 +32,8 @@ namespace POS.Data
         public DbSet<AttendanceDay> AttendanceDays { get; set; }
         public DbSet<AttendancePunch> AttendancePunches { get; set; }
 
+        public DbSet<Person> Persons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Product entity
