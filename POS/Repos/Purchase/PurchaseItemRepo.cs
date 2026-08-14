@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using POS.Data;
 using POS.Entity;
+using POS.Entity.Inovice;
 
 namespace POS.Repos;
 
@@ -12,32 +13,32 @@ public class PurchaseItemRepo : IPurchaseItemRepo
         _context = context;
     }
 
-    public async Task AddAsync(PurchaseItem value)
+    public async Task AddAsync(InvoiceItem value)
     {
-        await _context.PurchaseItems.AddAsync(value);
+        await _context.InvoiceItems.AddAsync(value);
     }
 
-    public async Task AddBulkAsync(IEnumerable<PurchaseItem> values)
+    public async Task AddBulkAsync(IEnumerable<InvoiceItem> values)
     {
-        await _context.PurchaseItems.AddRangeAsync(values);
+        await _context.InvoiceItems.AddRangeAsync(values);
     }
 
-    public Task DeleteAsync(PurchaseItem value)
+    public Task DeleteAsync(InvoiceItem value)
     {
         return Task.Run(()=> true);
     }
 
-    public async Task<IEnumerable<PurchaseItem>?> GetAllAsync()
+    public async Task<IEnumerable<InvoiceItem>?> GetAllAsync()
     {
-        return await _context.PurchaseItems.ToListAsync();
+        return await _context.InvoiceItems.ToListAsync();
     }
 
-    public Task<PurchaseItem?> GetByIDAsync(int id)
+    public Task<InvoiceItem?> GetByIDAsync(int id)
     {
-        return _context.PurchaseItems.FirstOrDefaultAsync(x=>x.Id == id);
+        return _context.InvoiceItems.FirstOrDefaultAsync(x=>x.Id == id);
     }
 
-    public Task UpdateAsync(PurchaseItem value)
+    public Task UpdateAsync(InvoiceItem value)
     {
         return Task.Run(()=>true);
     }

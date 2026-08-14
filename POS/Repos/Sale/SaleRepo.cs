@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using POS.Data;
-using POS.Entity;
+using POS.Entity.Inovice;
 
 namespace POS.Repos
 {
@@ -12,41 +12,41 @@ namespace POS.Repos
             _context = appDbContext;
         }
 
-        public async Task AddAsync(Sale value)
+        public async Task AddAsync(SaleInvoice value)
         {
             await _context.Sales.AddAsync(value);
         }
 
-        public async Task AddBulkAsync(IEnumerable<Sale> values)
+        public async Task AddBulkAsync(IEnumerable<SaleInvoice> values)
         {
             await _context.Sales.AddRangeAsync(values);
 
         }
 
-        public Task DeleteAsync(Sale value)
+        public Task DeleteAsync(SaleInvoice value)
         {
             return Task.Run(()=> true);
         }
 
-        public async Task<IEnumerable<Sale>?> GetAllAsync()
+        public async Task<IEnumerable<SaleInvoice>?> GetAllAsync()
         {
             return await _context.Sales.ToListAsync();
         }
 
-        public Task<Sale?> GetByIDAsync(int id)
+        public Task<SaleInvoice?> GetByIDAsync(int id)
         {
             return _context.Sales.FirstOrDefaultAsync(x=>x.Id == id);
         }
 
-        public Task UpdateAsync(Sale value)
+        public Task UpdateAsync(SaleInvoice value)
         {
            return Task.Run(()=>true);
         }
 
-        public async Task<IEnumerable<Sale>?> GetByInvoiceNumberAsync(string invoiceNumber)
+        public async Task<IEnumerable<SaleInvoice>?> GetByInvoiceNumberAsync(string invoiceNumber)
         {
             return await _context.Sales
-                .Where(p => p.InvoiceNumber.Contains(invoiceNumber))
+                .Where(p => p.Invoice.InvoiceNumber.Contains(invoiceNumber))
                 .ToListAsync();
         }
     }

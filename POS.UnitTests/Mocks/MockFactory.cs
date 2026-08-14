@@ -70,13 +70,13 @@ namespace POS.UnitTests.Mocks
             };
         }
 
-        public static List<Batch> CreateSampleBatches()
+        public static List<ProductBatch> CreateSampleBatches()
         {
-            return new List<Batch>
+            return new List<ProductBatch>
             {
-                new Batch { Id = 1, ProductId = 1, MRP = 15.00m, SaleRate = 12.00m },
-                new Batch { Id = 2, ProductId = 2, MRP = 25.00m, SaleRate = 22.00m },
-                new Batch { Id = 3, ProductId = 3, MRP = 8.00m, SaleRate = 6.00m }
+                new ProductBatch { Id = 1, ProductId = 1, MRP = 15.00m, SaleRate = 12.00m },
+                new ProductBatch { Id = 2, ProductId = 2, MRP = 25.00m, SaleRate = 22.00m },
+                new ProductBatch { Id = 3, ProductId = 3, MRP = 8.00m, SaleRate = 6.00m }
             };
         }
 

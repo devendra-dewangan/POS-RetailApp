@@ -1,6 +1,6 @@
 namespace POS.Repos;
-using POS.Entity;
+using POS.Entity.Inovice;
 
-public interface IPurchaseItemRepo : IRepository<PurchaseItem>,IAddBulk<PurchaseItem>
+public interface IPurchaseItemRepo : IRepository<InvoiceItem>,IAddBulk<InvoiceItem>
 {
 }

@@ -31,8 +31,6 @@ public class PersonRepo : IPersonRepo
     {
         return await _context.Persons.FirstOrDefaultAsync(p => p.Id == id);
     }
-    }
-
     public Task UpdateAsync(Person value)
     {
         throw new NotImplementedException();

@@ -7,7 +7,7 @@ namespace POS.Repos
     {
         IProductRepo Products {get;}
         IBatchRepo Batches {get;}
-        ISaleItemRepo SaleItems {get;}
+        IInvoiceItemRepo SaleItems {get;}
         ISaleRepo Sales {get;}
         IBuyerRepo Buyers {get;}
         ISupplierRepo Suppliers {get;}

@@ -12,8 +12,8 @@ namespace POS.Repos
         private IBatchRepo? _batches;
         public IBatchRepo Batches => _batches ??= new BatchRepo(context);
 
-        private ISaleItemRepo? _saleItems;
-        public ISaleItemRepo SaleItems => _saleItems ??= new SaleItemRepo(context);
+        private IInvoiceItemRepo? _saleItems;
+        public IInvoiceItemRepo SaleItems => _saleItems ??= new InvoiceItemRepo(context);
 
         private ISaleRepo? _sales;
         public ISaleRepo Sales => _sales ??= new SaleRepo(context);

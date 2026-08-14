@@ -1,3 +1,4 @@
+using POS.Entity.Inovice;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -25,9 +26,9 @@ namespace POS.Entity
         public decimal TotalStock { get; set; } = 0;
         
         [JsonIgnore]
-        public ICollection<Batch> Batches { get; set; } = [];
+        public ICollection<ProductBatch> Batches { get; set; } = [];
 
         [JsonIgnore]
-        public ICollection<PurchaseItem> PurchaseItems { get; set; } = [];
+        public ICollection<InvoiceItem> Items { get; set; } = [];
     }
 }

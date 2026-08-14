@@ -25,18 +25,18 @@ namespace POS.Controllers
         [HttpPost("{purchaseCartId}/complete")]
         public async Task<ActionResult> CompletePurchase(int purchaseCartId)
         {
-            var purchase = await _purchaseService.CompletePurchaseAsync(purchaseCartId);
+            var purchase = (await _purchaseService.CompletePurchaseAsync(purchaseCartId)).Invoice;
             return Ok(new CompletePurchaseResponse(
                 purchase.InvoiceNumber,
-                purchase.PurchaseDate,
-                purchase.PurchaseItems.Sum(i => i.Quantity * i.PurchaseRate),
-                [.. purchase.PurchaseItems.Select(i => new PurchaseItemDto(
+                purchase.InvoiceDate,
+                purchase.InvoiceItems.Sum(i => i.Quantity * i.Price),
+                [.. purchase.InvoiceItems.Select(i => new PurchaseItemDto(
                     i.ProductId,
                     i.Product!.ProductCode,
                     i.Product.ProductName,
-                    i.PurchaseRate,
+                    i.Price,
                     i.Quantity,
-                    i.Quantity * i.PurchaseRate
+                    i.Quantity * i.Price
                 ))]
             ));
         }

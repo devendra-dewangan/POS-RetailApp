@@ -1,11 +1,10 @@
-
-using POS.Entity;
+using POS.Entity.Inovice;
 
 namespace POS.Repos
 {
-    public interface IPurchaseRepo : IRepository<Purchase>, IAddBulk<Purchase>
+    public interface IPurchaseRepo : IRepository<PurchaseInvoice>, IAddBulk<PurchaseInvoice>
     {
-        Task<IEnumerable<Purchase>?> GetByInvoiceNumbersAsync(IEnumerable<string> invoiceNumbers);
-        Task<IEnumerable<Purchase>?> GetByInvoiceNumberAsync(string invoiceNumber);
+        Task<IEnumerable<PurchaseInvoice>?> GetByInvoiceNumbersAsync(IEnumerable<string> invoiceNumbers);
+        Task<IEnumerable<PurchaseInvoice>?> GetByInvoiceNumberAsync(string invoiceNumber);
     }
 }

@@ -1,4 +1,5 @@
 using POS.Entity;
+using POS.Entity.Inovice;
 using POS.Repos;
 namespace POS.Services
 {
@@ -18,7 +19,7 @@ namespace POS.Services
 
             var sale = new SaleCart
             {
-                Sale = new Sale
+                Sale = new SaleInvoice
                 {
                     BuyerId = buyerId
                 }
@@ -27,7 +28,7 @@ namespace POS.Services
             return sale.Id;
         }
 
-        public async Task<Sale> CompleteSaleAsync(int saleCartId)
+        public async Task<SaleInvoice> CompleteSaleAsync(int saleCartId)
         {
             var saleCart = _liteStore.SaleCarts.FindById(saleCartId);
             if (saleCart == null || saleCart.Status == CartStatus.Completed)
@@ -42,8 +43,8 @@ namespace POS.Services
             await _unitOfWork.CommitAsync();
 
             var saleItems = saleCart.Items;
-
-            saleItems.ForEach(item => item.SaleId = sale.Id); // Update the cart with the saved purchase (with ID)
+            //Todo
+            //saleItems.ForEach(item => item.SaleId = sale.Id); // Update the cart with the saved purchase (with ID)
             await _unitOfWork.SaleItems.AddBulkAsync(saleItems);
             await _unitOfWork.CommitAsync();
 
@@ -54,14 +55,14 @@ namespace POS.Services
             return sale;
         }
 
-        public async Task<IEnumerable<Sale>?> GetSaleByInvoiceAsync(string invoiceNumber)
+        public async Task<IEnumerable<SaleInvoice>?> GetSaleByInvoiceAsync(string invoiceNumber)
         {
             var sales = await _unitOfWork.Sales.GetByInvoiceNumberAsync(invoiceNumber);
 
             return sales;
         }
 
-        public async Task<IEnumerable<Sale>?> GetAllSalesAsync()
+        public async Task<IEnumerable<SaleInvoice>?> GetAllSalesAsync()
         {
             return await _unitOfWork.Sales.GetAllAsync();
         }
@@ -74,26 +75,26 @@ namespace POS.Services
 
             var batch = await _unitOfWork.Batches.GetByIDAsync(batchId) 
                     ?? throw new InvalidOperationException("Insufficient stock in the batch.");
+            //todo
+            //var saleItem = new SaleItem
+            //{
+            //    Quantity = quantity,
+            //    SaleRate = batch.SaleRate,
+            //};
 
-            var saleItem = new SaleItem
-            {
-                Quantity = quantity,
-                SaleRate = batch.SaleRate,
-            };
-
-            var saleBatch = new SaleBatch
-            {
-                SaleItemId = saleItem.Id, // This will be set when the SaleItem is create
-                QuantityTaken = quantity,
-            };
-
-            saleItem.SaleBatches.Add(saleBatch);
-            saleCart.Items.Add(saleItem);
+            //var saleBatch = new SaleBatch
+            //{
+            //    SaleItemId = saleItem.Id, // This will be set when the SaleItem is create
+            //    QuantityTaken = quantity,
+            //};
+            //
+            //saleItem.SaleBatches.Add(saleBatch);
+            //saleCart.Items.Add(saleItem);
             _liteStore.SaleCarts.Update(saleCart);
             return true;
         }
 
-        public async Task<bool> AddSaleBulkAsync(IEnumerable<Sale> sales)
+        public async Task<bool> AddSaleBulkAsync(IEnumerable<SaleInvoice> sales)
         {
             try
             {

@@ -1,3 +1,5 @@
+using POS.Entity.Inovice;
+
 namespace POS.Entity;
 
 public enum CartStatus
@@ -12,7 +14,7 @@ public class PurchaseCart
 {
     public int Id { get; set; }
     public CartStatus Status { get; set; } = CartStatus.Open;
-    public Purchase? Purchase { get; set; }
+    public PurchaseInvoice? Purchase { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

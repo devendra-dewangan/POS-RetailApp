@@ -1,9 +1,9 @@
-using POS.Entity;
+using POS.Entity.Inovice;
 
 namespace POS.Repos
 {
-    public interface ISaleRepo : IRepository<Sale>, IAddBulk<Sale>
+    public interface ISaleRepo : IRepository<SaleInvoice>, IAddBulk<SaleInvoice>
     {
-        Task<IEnumerable<Sale>?> GetByInvoiceNumberAsync(string invoiceNumber);
+        Task<IEnumerable<SaleInvoice>?> GetByInvoiceNumberAsync(string invoiceNumber);
     }
 }

@@ -1,3 +1,4 @@
+using POS.Entity.Inovice;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -11,6 +12,6 @@ namespace POS.Entity.Person
         public Person Person { get; set; }
 
         [JsonIgnore]
-        public ICollection<Sale> Sales { get; set; } = [];
+        public ICollection<SaleInvoice> Sales { get; set; } = [];
     }
 }

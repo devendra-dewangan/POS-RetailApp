@@ -1,5 +1,6 @@
 using NetTopologySuite.Index.HPRtree;
 using POS.Entity;
+using POS.Entity.Inovice;
 using POS.Entity.Person;
 using POS.Repos;
 
@@ -16,7 +17,7 @@ namespace POS.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<PurchaseItem>> ProcessPurchaseDataFromTempTable(IEnumerable<ImportPurchaseTemp> tempRecords)
+        public async Task<IEnumerable<InvoiceItem>> ProcessPurchaseDataFromTempTable(IEnumerable<ImportPurchaseTemp> tempRecords)
         {
             // 1️⃣ Extract distinct supplier names
             var supplierNames = tempRecords
@@ -52,7 +53,7 @@ namespace POS.Services
                 .ToDictionary(p => p.Barcode, StringComparer.OrdinalIgnoreCase);
 
             var purchaseCache = (purchasesFromDb ?? [])
-                .ToDictionary(p => p.InvoiceNumber, StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(p => p.Invoice.InvoiceNumber, StringComparer.OrdinalIgnoreCase);
 
             var purchaseItems = tempRecords.Select(record =>
             {
@@ -69,10 +70,13 @@ namespace POS.Services
                 if (!purchaseCache.TryGetValue(record.InvoiceNo, out var purchase))
                 {
                     
-                    purchase = new Purchase
+                    purchase = new PurchaseInvoice
                     {
-                        InvoiceNumber = record.InvoiceNo,
-                        PurchaseDate = record.InvoiceDate,
+                        Invoice = new Invoice
+                        {
+                            InvoiceNumber = record.InvoiceNo,
+                            InvoiceDate = record.InvoiceDate
+                        },
                         Supplier = supplier
                     };
 
@@ -93,22 +97,23 @@ namespace POS.Services
 
                 product.TotalStock += record.Quantity;
 
-                return new PurchaseItem()
+                //ToDo
+                return new InvoiceItem()
                 {
                     Product = product,
-                    Purchase = purchase,
-                    Quantity = record.Quantity,
-                    PurchaseRate = record.PurchaseRate,
-                    Batches =
-                    [
-                        new() {
-                            Product = product,
-                            OpeningStock = record.Quantity,
-                            RemainingStock = record.Quantity,
-                            MRP = record.PurchaseRate,
-                            SaleRate = record.PurchaseRate,
-                        }
-                    ],
+                    //Purchase = purchase,
+                    //Quantity = record.Quantity,
+                    //PurchaseRate = record.PurchaseRate,
+                    //Batches =
+                    //[
+                    //    new() {
+                    //        Product = product,
+                    //        OpeningStock = record.Quantity,
+                    //        RemainingStock = record.Quantity,
+                    //        MRP = record.PurchaseRate,
+                    //        SaleRate = record.PurchaseRate,
+                    //    }
+                    //],
                 };
             });
 
@@ -150,20 +155,20 @@ namespace POS.Services
                 _logger.LogInformation($"Added {saved} rows");
 
             }
+            //todo
+            //foreach (var item in purchaseItems)
+            //{
+            //    item.InvoiceId = item.Invoice!.Id;
+            //    item.Invoice = null;
 
-            foreach (var item in purchaseItems)
-            {
-                item.PurchaseId = item.Purchase!.Id;
-                item.Purchase = null;
+            //    item.ProductId = item.Product!.Id;
 
-                item.ProductId = item.Product!.Id;
-
-                foreach(var batch in item.Batches)
-                {
-                    batch.ProductId = batch.Product!.Id;
-                    batch.Product = null;
-                }
-            }
+            //    foreach(var batch in item.Batches)
+            //    {
+            //        batch.ProductId = batch.Product!.Id;
+            //        batch.Product = null;
+            //    }
+            //}
 
             return purchaseItems;
         }

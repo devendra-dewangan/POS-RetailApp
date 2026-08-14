@@ -24,11 +24,11 @@ namespace POS.Services
                 Barcode = barcode
             };
 
-            var batch = new Batch
+            var batch = new ProductBatch
             {
                 Product = product, 
                 BatchNumber = "DEFAULT",
-                PurchaseItemId = null, 
+                InvoiceItemId = null, 
                 RemainingStock = 0, 
                 OpeningStock = 0, 
                 MRP = MRP, 

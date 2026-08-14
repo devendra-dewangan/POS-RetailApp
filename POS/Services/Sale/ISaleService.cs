@@ -1,12 +1,12 @@
-using POS.Entity;
+using POS.Entity.Inovice;
 
 namespace POS.Services
 {
     public interface ISaleService
     {
         Task<int> AddSaleAsync(int buyerId);
-        Task<IEnumerable<Sale>?> GetSaleByInvoiceAsync(string invoiceNumber);
-        Task<IEnumerable<Sale>?> GetAllSalesAsync();
-        Task<bool> AddSaleBulkAsync(IEnumerable<Sale> sales);
+        Task<IEnumerable<SaleInvoice>?> GetSaleByInvoiceAsync(string invoiceNumber);
+        Task<IEnumerable<SaleInvoice>?> GetAllSalesAsync();
+        Task<bool> AddSaleBulkAsync(IEnumerable<SaleInvoice> sales);
     }
 }

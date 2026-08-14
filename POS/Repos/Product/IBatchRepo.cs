@@ -2,8 +2,8 @@ using POS.Entity;
 
 namespace POS.Repos
 {
-    public interface IBatchRepo : IRepository<Batch>, IAddBulk<Batch>
+    public interface IBatchRepo : IRepository<ProductBatch>, IAddBulk<ProductBatch>
     {
-         Task<IEnumerable<Batch>?> GetByPurchaseIdAsync(int purchaseId);
+         Task<IEnumerable<ProductBatch>?> GetByPurchaseIdAsync(int purchaseId);
     }
 }

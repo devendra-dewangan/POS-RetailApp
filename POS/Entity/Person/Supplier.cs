@@ -1,3 +1,4 @@
+using POS.Entity.Inovice;
 using System.Text.Json.Serialization;
 namespace POS.Entity.Person;
 
@@ -9,5 +10,5 @@ public class Supplier
     public Person Person { get; set; }
 
     [JsonIgnore]
-    public ICollection<Purchase> Purchases { get; set; } = [];
+    public ICollection<PurchaseInvoice> Purchases { get; set; } = [];
 }

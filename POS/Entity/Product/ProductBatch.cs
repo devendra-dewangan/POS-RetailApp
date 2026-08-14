@@ -1,10 +1,11 @@
+using POS.Entity.Inovice;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 
 namespace POS.Entity
 {
-    public class Batch
+    public class ProductBatch
     {
         public int Id { get; set; }
 
@@ -16,9 +17,9 @@ namespace POS.Entity
         
         public Product? Product { get; set; }
         
-        public int? PurchaseItemId { get; set; }
+        public int? InvoiceItemId { get; set; }
         
-        public PurchaseItem? PurchaseItem { get; set; }
+        public InvoiceItem? InvoiceItem { get; set; }
         
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Remaining Stock must be a non-negative value")]
@@ -40,7 +41,5 @@ namespace POS.Entity
         [Display(Name = "Sale Rate")]
         public decimal SaleRate { get; set; }
 
-        [JsonIgnore]
-        public ICollection<SaleBatch> SaleBatches { get; set; } = [];
     }
 }
