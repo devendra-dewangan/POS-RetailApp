@@ -248,8 +248,10 @@ namespace POS.Services
                         record.Product!.TotalStock += record.Quantity;
                         record.Product = null;
                     }
+
+                    //Todo
                     // Save processed data to main tables
-                    await _unitOfWork.PurchaseItems.AddBulkAsync(processedRecords);
+                    //await _unitOfWork.PurchaseItems.AddBulkAsync(processedRecords);
                     var saved = await _unitOfWork.CommitAsync();
                     _logger.LogInformation($"Batch {i + 1} processed and added {saved} row successfully.");
 

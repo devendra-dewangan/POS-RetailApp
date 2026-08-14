@@ -4,10 +4,10 @@ using POS.Entity;
 
 namespace POS.Repos
 {
-    public class BatchRepo : IBatchRepo
+    public class ProductBatchRepo : IProductBatchRepo
     {
         private AppDbContext _context;
-        public BatchRepo(AppDbContext appDbContext)
+        public ProductBatchRepo(AppDbContext appDbContext)
         {
             _context = appDbContext;
         }

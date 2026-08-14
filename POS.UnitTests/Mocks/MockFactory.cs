@@ -84,9 +84,9 @@ namespace POS.UnitTests.Mocks
         {
             return new List<Buyer>
             {
-                new Buyer { Id = 1, Name = "Buyer 1" },
-                new Buyer { Id = 2, Name = "Buyer 2" },
-                new Buyer { Id = 3, Name = "Buyer 3" }
+                new Buyer { Id = 1, BuyerCode = "Buyer 1" },
+                new Buyer { Id = 2, BuyerCode = "Buyer 2" },
+                new Buyer { Id = 3, BuyerCode = "Buyer 3" }
             };
         }
 
@@ -94,9 +94,9 @@ namespace POS.UnitTests.Mocks
         {
             return new List<Supplier>
             {
-                new Supplier { Id = 1, Name = "Supplier 1" },
-                new Supplier { Id = 2, Name = "Supplier 2" },
-                new Supplier { Id = 3, Name = "Supplier 3" }
+                new Supplier { Id = 1, SupplierCode = "Supplier 1" },
+                new Supplier { Id = 2, SupplierCode = "Supplier 2" },
+                new Supplier { Id = 3, SupplierCode = "Supplier 3" }
             };
         }
 

@@ -3,7 +3,7 @@ using POS.Data;
 using POS.Entity;
 using POS.Entity.Inovice;
 
-namespace POS.Repos
+namespace POS.Repos.Invoice
 {
     public class InvoiceItemRepo : IInvoiceItemRepo
     {

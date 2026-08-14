@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using POS.Data;
 using POS.Repos.Attendance;
+using POS.Repos.Invoice;
 
 namespace POS.Repos
 {
@@ -9,8 +10,8 @@ namespace POS.Repos
         private IProductRepo? _products;
         public IProductRepo Products => _products ??= new ProductRepo(context);
 
-        private IBatchRepo? _batches;
-        public IBatchRepo Batches => _batches ??= new BatchRepo(context);
+        private IProductBatchRepo? _batches;
+        public IProductBatchRepo Batches => _batches ??= new ProductBatchRepo(context);
 
         private IInvoiceItemRepo? _saleItems;
         public IInvoiceItemRepo SaleItems => _saleItems ??= new InvoiceItemRepo(context);
@@ -29,9 +30,6 @@ namespace POS.Repos
 
         private IRefreshTokenRepo? _refreshTokens;
         public IRefreshTokenRepo RefreshTokens => _refreshTokens ??= new RefreshTokenRepo(context);
-
-        private IPurchaseItemRepo? _purchaseItems;
-        public IPurchaseItemRepo PurchaseItems => _purchaseItems ??= new PurchaseItemRepo(context);
 
         private IImportInfoRepo? _importInfos;
         public IImportInfoRepo ImportInfos => _importInfos ??= new ImportInfoRepo(context);
