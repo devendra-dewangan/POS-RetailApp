@@ -1,8 +1,8 @@
-using NetTopologySuite.Index.HPRtree;
-using POS.Entity;
+using POS.Entity.Product;
 using POS.Entity.Inovice;
 using POS.Entity.Person;
 using POS.Repos;
+using POS.Entity;
 
 namespace POS.Services
 {

@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using POS.Entity;
+using POS.Entity.Product;
 using POS.Entity.Attendance;
 using POS.Entity.Inovice;
 using POS.Entity.Person;
+using POS.Entity;
 
 namespace POS.Data
 {
@@ -84,9 +85,6 @@ namespace POS.Data
                       .HasForeignKey(e => e.ProductId)
                       .OnDelete(DeleteBehavior.SetNull); // Allow null ProductId for empty batches
                 //to do
-                // Allow null PurchaseItemId
-                entity.Property(e => e.RemainingStock).IsRequired().HasColumnType("decimal(18,2)");
-                entity.Property(e => e.OpeningStock).IsRequired().HasColumnType("decimal(18,2)");
                 entity.Property(e => e.MRP).IsRequired().HasColumnType("decimal(18,2)");
                 entity.Property(e => e.SaleRate).IsRequired().HasColumnType("decimal(18,2)");
             });

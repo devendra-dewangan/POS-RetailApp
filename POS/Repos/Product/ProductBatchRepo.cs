@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using POS.Data;
-using POS.Entity;
+using POS.Entity.Product;
 
 namespace POS.Repos
 {
@@ -40,9 +40,7 @@ namespace POS.Repos
 
         public async Task<IEnumerable<ProductBatch>?> GetByPurchaseIdAsync(int purchaseId)
         {
-            return await _context.Batches
-                .Where(b => b.InvoiceItemId == purchaseId)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
         public Task UpdateAsync(ProductBatch value)

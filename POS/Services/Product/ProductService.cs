@@ -1,4 +1,4 @@
-using POS.Entity;
+using POS.Entity.Product;
 using POS.Repos;
 
 namespace POS.Services
@@ -28,9 +28,6 @@ namespace POS.Services
             {
                 Product = product, 
                 BatchNumber = "DEFAULT",
-                InvoiceItemId = null, 
-                RemainingStock = 0, 
-                OpeningStock = 0, 
                 MRP = MRP, 
                 SaleRate = MRP 
             };
