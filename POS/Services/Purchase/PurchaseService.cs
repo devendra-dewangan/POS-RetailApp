@@ -1,7 +1,8 @@
-using POS.Entity;
+using POS.Entity.Product;
 using POS.Entity.Inovice;
 using POS.Model;
 using POS.Repos;
+using POS.Entity;
 
 namespace POS.Services
 {
@@ -133,8 +134,6 @@ namespace POS.Services
                 Batch = new ProductBatch
                 {
                     BatchNumber = request.Batch.BatchNumber,
-                    RemainingStock = request.Batch.Quantity,
-                    OpeningStock = request.Batch.Quantity,
                     MRP = request.Batch.MRP,
                     SaleRate = request.Batch.SalePrice,
                     ProductId = request.ProductId,
