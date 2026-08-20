@@ -1,4 +1,4 @@
-using NetTopologySuite.Index.HPRtree;
+using POS.Constants;
 using POS.Entity;
 using POS.Entity.Inovice;
 using POS.Entity.Product;
@@ -9,6 +9,7 @@ namespace POS.Services
     {
         private IUnitOfWork _unitOfWork;
         private ILiteStore _liteStore;
+        private const string SaleInvoice = "SaleInvoice";
 
         public SaleService(IUnitOfWork uow, ILiteStore liteStore)
         {
@@ -43,20 +44,21 @@ namespace POS.Services
             if (saleCart == null ||
                 saleCart.Status != CartStatus.Open)
             {
-                throw new InvalidOperationException("Invalid sale cart.");
+                throw new InvalidOperationException(
+                    TransactionMessages.InvalidCart(TransactionType.Sale));
             }
 
             var saleInvoice = saleCart.Sale
                 ?? throw new InvalidOperationException(
-                    "Sale not found.");
+                    TransactionMessages.CartNotFound(TransactionType.Sale));
 
             var saleItems = saleInvoice.Invoice?.InvoiceItems
                 ?? throw new InvalidOperationException(
-                    "Sale items not found.");
+                    TransactionMessages.ItemNotFound(TransactionType.Sale));
 
             if (saleItems.Count == 0)
                 throw new InvalidOperationException(
-                    "Sale contains no items.");
+                    TransactionMessages.CartContainsNoItems(TransactionType.Sale));
 
 
             // ----------------------------------------
@@ -125,9 +127,8 @@ namespace POS.Services
                             out batch))
                     {
                         throw new InvalidOperationException(
-                            $"Batch not found. " +
-                            $"ProductId: {item.ProductId}, " +
-                            $"BatchId: {item.BatchId}");
+                            TransactionMessages.BatchNotFound(
+                                TransactionType.Sale, item.ProductId, item.BatchId));
                     }
 
                     // --------------------------------
@@ -137,21 +138,16 @@ namespace POS.Services
                     if (batch.BatchStock.OnHand < item.Quantity)
                     {
                         throw new InvalidOperationException(
-                            $"Batch Quantity is less. " +
-                            $"ProductId: {item.ProductId}, " +
-                            $"BatchId: {item.BatchId}");
+                            TransactionMessages.BatchQuantityInsufficient(
+                                TransactionType.Sale, item.ProductId, item.BatchId));
                     }
 
                     batch.BatchStock.OnHand -= item.Quantity;
-
-
                     // --------------------------------
                     // Link permanent Batch to item
                     // --------------------------------
 
                     item.Batch = batch;
-
-
                     // --------------------------------
                     // Create stock movement
                     // --------------------------------
@@ -159,14 +155,10 @@ namespace POS.Services
                     var movement = new StockMovement
                     {
                         ProductId = item.ProductId,
-
                         ProductBatch = batch,
-
-                        Type = StockMovementType.Sale,
-
+                        Type = TransactionType.Sale,
                         Quantity = item.Quantity,
-
-                        ReferenceType = "SaleInvoice"
+                        ReferenceType = SaleInvoice,
                     };
 
                     stockMovements.Add(movement);
@@ -262,18 +254,15 @@ namespace POS.Services
         {
             var saleCart = _liteStore.SaleCarts.FindById(saleCartId);
             if (saleCart == null || saleCart.Status != CartStatus.Open)
-                throw new InvalidOperationException("Invalid sale cart.");
+                throw new InvalidOperationException(TransactionMessages.InvalidCart(TransactionType.Sale));
             var invoice = saleCart.Sale!.Invoice!;
 
             var batch = await _unitOfWork.ProductBatches.GetByIDAsync(batchId)
-                    ?? throw new InvalidOperationException("Invalid batch.");
+                    ?? throw new InvalidOperationException(TransactionMessages.BatchNotFound(TransactionType.Sale, productId, batchId));
 
             if (batch.BatchStock.OnHand < quantity)
             {
-                throw new InvalidOperationException(
-                    $"Batch Quantity is less. " +
-                    $"ProductId: {productId}, " +
-                    $"BatchId: {batchId}");
+                throw new InvalidOperationException(TransactionMessages.BatchQuantityInsufficient(TransactionType.Sale, productId, batchId));
             }
 
             invoice.InvoiceItems.Add(new InvoiceItem()

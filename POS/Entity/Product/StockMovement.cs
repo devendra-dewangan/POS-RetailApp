@@ -1,22 +1,12 @@
-﻿using POS.Entity.Inovice;
+﻿using POS.Constants;
+using POS.Entity.Inovice;
 
 namespace POS.Entity.Product
 {
-    public enum StockMovementType
-    {
-        OpeningStock,
-        Purchase,
-        Sale,
-        PurchaseReturn,
-        SalesReturn,
-        Adjustment,
-        Damage,
-        Expired
-    }
     public class StockMovement
     {
         public long Id { get; set; }
-        public StockMovementType Type { get; set; }
+        public TransactionType Type { get; set; }
         public decimal Quantity { get; set; }
         public string ReferenceType { get; set; } = null!;
         public long ReferenceId { get; set; }

@@ -3,11 +3,13 @@ using POS.Entity.Inovice;
 using POS.Model;
 using POS.Repos;
 using POS.Entity;
+using POS.Constants;
 
 namespace POS.Services
 {
     public class PurchaseService : IPurchaseService
     {
+        private const string PurchaseRefernece = "PurchaseInvoice";
         private IUnitOfWork _unitOfWork;
         private ILiteStore _liteStore;
 
@@ -19,8 +21,8 @@ namespace POS.Services
 
         public async Task<int> AddPurchaseAsync(int supplierId)
         {
-            var supplier = await _unitOfWork.Suppliers.GetByIDAsync(supplierId) 
-                ?? throw new InvalidOperationException("Supplier not found.");
+            var supplier = await _unitOfWork.Suppliers.GetByIDAsync(supplierId)
+                ?? throw new InvalidOperationException(TransactionMessages.SupplierNotFound(supplierId));
 
             var purchase = new PurchaseCart
             {
@@ -29,7 +31,7 @@ namespace POS.Services
                     Supplier = supplier,
                     Invoice = new Invoice
                     {
-                        InvoiceNumber = $"INV-{DateTime.UtcNow.Ticks}",
+                        InvoiceNumber = GetInvoiceNumber(),
                         InvoiceDate = DateTime.UtcNow,
                         InvoiceItems = []
                     }
@@ -42,6 +44,10 @@ namespace POS.Services
             };
             _liteStore.PurchaseCarts.Upsert(purchase);
             return purchase.Id;
+        }
+        private static string GetInvoiceNumber()
+        {
+            return $"INV-{DateTime.UtcNow.Ticks}";
         }
 
         public async Task<PurchaseInvoice> CompletePurchaseAsync(int purchaseCartId)
@@ -57,20 +63,20 @@ namespace POS.Services
                 purchaseCart.Status != CartStatus.Open)
             {
                 throw new InvalidOperationException(
-                    "Invalid purchase cart.");
+                    TransactionMessages.InvalidCart(TransactionType.Purchase));
             }
 
             var purchase = purchaseCart.Purchase
                 ?? throw new InvalidOperationException(
-                    "Purchase not found.");
+                    TransactionMessages.CartNotFound(TransactionType.Purchase));
 
             var purchaseItems = purchase.Invoice?.InvoiceItems
                 ?? throw new InvalidOperationException(
-                    "Purchase items not found.");
+                    TransactionMessages.ItemNotFound(TransactionType.Purchase));
 
             if (purchaseItems.Count == 0)
                 throw new InvalidOperationException(
-                    "Purchase contains no items.");
+                    TransactionMessages.CartContainsNoItems(TransactionType.Purchase));
 
 
             // ----------------------------------------
@@ -161,12 +167,9 @@ namespace POS.Services
                             out var product))
                     {
                         throw new InvalidOperationException(
-                            $"Product not found: {item.ProductId}");
+                            TransactionMessages.ProoductNotFound(TransactionType.Purchase, item.ProductId));
                     }
-
-
                     ProductBatch? batch = null;
-
 
                     // --------------------------------
                     // Existing batch
@@ -179,12 +182,9 @@ namespace POS.Services
                                 out batch))
                         {
                             throw new InvalidOperationException(
-                                $"Batch not found. " +
-                                $"ProductId: {item.ProductId}, " +
-                                $"BatchId: {item.BatchId}");
+                                TransactionMessages.BatchNotFound(TransactionType.Purchase, item.ProductId, item.BatchId));
                         }
                     }
-
 
                     // --------------------------------
                     // New batch
@@ -195,8 +195,7 @@ namespace POS.Services
                         if (item.Batch == null)
                         {
                             throw new InvalidOperationException(
-                                $"Batch information is missing " +
-                                $"for product: {item.ProductId}");
+                                TransactionMessages.BatchInformationMissing(item.ProductId));
                         }
 
                         (int ProductId, string BatchNumber) newBatchKey =
@@ -232,8 +231,6 @@ namespace POS.Services
                             newBatchDict[newBatchKey] = batch;
                         }
                     }
-
-
                     // --------------------------------
                     // Make sure BatchStock exists
                     // --------------------------------
@@ -245,20 +242,17 @@ namespace POS.Services
                         OnHand = 0
                     };
 
-
                     // --------------------------------
                     // Increase stock
                     // --------------------------------
 
                     batch.BatchStock.OnHand += item.Quantity;
 
-
                     // --------------------------------
                     // Link permanent Batch to item
                     // --------------------------------
 
                     item.Batch = batch;
-
 
                     // --------------------------------
                     // Create stock movement
@@ -267,21 +261,14 @@ namespace POS.Services
                     var movement = new StockMovement
                     {
                         ProductId = item.ProductId,
-
                         ProductBatch = batch,
-
-                        Type = StockMovementType.Purchase,
-
+                        Type = TransactionType.Purchase,
                         Quantity = item.Quantity,
-
-                        ReferenceType = "PurchaseInvoice"
+                        ReferenceType = PurchaseRefernece
                     };
 
                     stockMovements.Add(movement);
                 }
-
-
-
 
                 // ----------------------------------------
                 // 9. Save Purchase
@@ -292,7 +279,6 @@ namespace POS.Services
 
                 await _unitOfWork.CommitAsync();
 
-
                 // ----------------------------------------
                 // 10. Purchase ID is now available
                 // ----------------------------------------
@@ -301,7 +287,6 @@ namespace POS.Services
                 {
                     movement.ReferenceId = purchase.Id;
                 }
-
 
                 // ----------------------------------------
                 // 11. Add Stock Movements
@@ -313,25 +298,20 @@ namespace POS.Services
                         .AddBulkAsync(stockMovements);
                 }
 
-
                 // ----------------------------------------
                 // 12. Save Stock Movements
                 // ----------------------------------------
 
                 await _unitOfWork.CommitAsync();
-
-
                 // ----------------------------------------
                 // 13. Commit permanent transaction
                 // ----------------------------------------
 
                 await transaction.CommitAsync();
 
-
                 // ----------------------------------------
                 // 14. Mark LiteDB cart completed
                 // ----------------------------------------
-
                 purchaseCart.Status = CartStatus.Completed;
                 purchaseCart.UpdatedAt = DateTime.UtcNow;
 
@@ -378,12 +358,12 @@ namespace POS.Services
             var purchaseCart = _liteStore.PurchaseCarts.FindById(purchaseDraftId);
 
             if (purchaseCart == null || purchaseCart.Status != CartStatus.Open)
-                throw new InvalidOperationException("Invalid purchase cart.");
+                throw new InvalidOperationException(TransactionMessages.InvalidCart(TransactionType.Purchase));
 
             var purchase = purchaseCart.Purchase!;
 
             var product = await _unitOfWork.Products.GetByIDAsync(request.ProductId)
-                ?? throw new InvalidOperationException("Product not found.");
+                ?? throw new InvalidOperationException(TransactionMessages.ProoductNotFound(TransactionType.Purchase, request.ProductId));
 
             var batch = (await _unitOfWork.ProductBatches.GetByProductIdAsync(request.ProductId))
                     .FirstOrDefault(b => b.BatchNumber == request.Batch.BatchNumber)

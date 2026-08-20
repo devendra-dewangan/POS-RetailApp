@@ -1,10 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.7.11919.86 stable
+VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS", "POS\POS.csproj", "{1DF88A21-5CAB-415C-DCDE-23CBEF3451D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.UnitTests", "POS.UnitTests\POS.UnitTests.csproj", "{A0D34F03-4F9B-F879-CF93-FFE487294453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Constants", "POS.Constants\POS.Constants.csproj", "{B3E8040E-9836-49A4-B138-94BDCBF5E22A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{A0D34F03-4F9B-F879-CF93-FFE487294453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D34F03-4F9B-F879-CF93-FFE487294453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D34F03-4F9B-F879-CF93-FFE487294453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
