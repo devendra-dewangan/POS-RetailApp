@@ -25,7 +25,10 @@ namespace POS.Entity.Product
         public int ProductId { get; set; }
         public Product? Product { get; set; }
 
+        public int BatchStockId { get; set; }
+        public BatchStock BatchStock { get; set; } = null!;
+
         public ICollection<InvoiceItem> InvoiceItems { get; set; } = [];
-        public ICollection<Entity.Product.StockMovement> StockMovements { get; set; } = [];
+        public ICollection<StockMovement> StockMovements { get; set; } = [];
     }
 }

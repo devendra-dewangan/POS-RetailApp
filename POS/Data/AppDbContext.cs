@@ -36,6 +36,8 @@ namespace POS.Data
 
         public DbSet<Invoice> Invoices { get; set; }
 
+        public DbSet<StockMovement> StockMovements { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure Product entity
@@ -81,7 +83,7 @@ namespace POS.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.HasOne(e => e.Product)
-                      .WithMany(p => p.Batches)
+                      .WithMany(p => p.ProductBatches)
                       .HasForeignKey(e => e.ProductId)
                       .OnDelete(DeleteBehavior.SetNull); // Allow null ProductId for empty batches
                 //to do

@@ -1,4 +1,5 @@
 using POS.Entity;
+using POS.Entity.Product;
 
 namespace POS.UnitTests.Builders
 {

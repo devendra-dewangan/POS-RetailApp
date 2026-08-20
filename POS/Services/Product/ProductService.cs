@@ -31,7 +31,7 @@ namespace POS.Services
                 MRP = MRP, 
                 SaleRate = MRP 
             };
-            product.Batches.Add(batch);
+            product.ProductBatches.Add(batch);
             try
             {
                 await _unitOfWork.Products.AddAsync(product);

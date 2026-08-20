@@ -96,7 +96,6 @@ namespace POS.Services
                     productCache[record.Barcode] = product;
                 }
 
-                product.TotalStock += record.Quantity;
 
                 //ToDo
                 return new InvoiceItem()

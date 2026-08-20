@@ -245,7 +245,7 @@ namespace POS.Services
 
                     foreach (var record in processedRecords)
                     {
-                        record.Product!.TotalStock += record.Quantity;
+                        //record.Product!.TotalStock += record.Quantity;
                         record.Product = null;
                     }
 

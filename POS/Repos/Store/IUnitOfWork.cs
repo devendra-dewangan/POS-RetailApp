@@ -18,6 +18,7 @@ namespace POS.Repos
         IImportInfoRepo ImportInfos { get; }
         IAttendanceDayRepo AttendanceDays { get; }
         IAttendancePunchRepo AttendancePunches { get; }
+        IStockMovementRepo StockMovements { get; }
 
         Task<int> CommitAsync(CancellationToken cancellationToke = default);
         Task<IDbContextTransaction> BeginTransactionAsync();

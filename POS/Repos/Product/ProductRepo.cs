@@ -36,27 +36,27 @@ namespace POS.Repos
             return Task.Run(() =>true);
         }
 
-        public async Task<IEnumerable<Product>?> GetByBarcodeAsync(string barcode)
+        public async Task<IEnumerable<Product>> GetByBarcodeAsync(string barcode)
         {
             return await _context.Products.Where(x => x.Barcode == barcode).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>?> GetByNameAsync(string name)
+        public async Task<IEnumerable<Product>> GetByNameAsync(string name)
         {
             return await _context.Products.Where(x => x.ProductName.Contains(name)).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>?> GetByIdsAsync(IEnumerable<int> ids)
+        public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<int> ids)
         {
             return await _context.Products.Where(x => ids.Contains(x.Id)).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>?> GetAllAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>?> GetByBarcodesAsync(IEnumerable<string> barcodes)
+        public async Task<IEnumerable<Product>> GetByBarcodesAsync(IEnumerable<string> barcodes)
         {
             if (barcodes == null || !barcodes.Any())
                 return [];

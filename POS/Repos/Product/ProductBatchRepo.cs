@@ -7,6 +7,7 @@ namespace POS.Repos
     public class ProductBatchRepo : IProductBatchRepo
     {
         private AppDbContext _context;
+
         public ProductBatchRepo(AppDbContext appDbContext)
         {
             _context = appDbContext;
@@ -38,7 +39,17 @@ namespace POS.Repos
             return _context.Batches.FirstOrDefaultAsync(x=>x.Id == id);
         }
 
-        public async Task<IEnumerable<ProductBatch>?> GetByPurchaseIdAsync(int purchaseId)
+        public async Task<IEnumerable<ProductBatch>> GetByBatchIds(IEnumerable<int> productBatches)
+        {
+            return await _context.Batches.Where(x => productBatches.Contains(x.Id)).Include(x => x.BatchStock).ToArrayAsync();
+        }
+
+        public async Task<IEnumerable<ProductBatch>> GetByProductIdAsync(int productId)
+        {
+            return await _context.Batches.Where(x => x.ProductId == productId).Include(x => x.BatchStock).ToArrayAsync();
+        }
+
+        public async Task<IEnumerable<ProductBatch>> GetByPurchaseIdAsync(int purchaseId)
         {
             throw new NotImplementedException();
         }

@@ -43,6 +43,9 @@ namespace POS.Repos
         private IAttendancePunchRepo? _attendancePunches;
         public IAttendancePunchRepo AttendancePunches => _attendancePunches ??= new AttendancePunchRepo(context);
 
+        private IStockMovementRepo _stockMovements;
+        public IStockMovementRepo StockMovements => _stockMovements ??= new StockMovementRepo(context);
+
 
         public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {

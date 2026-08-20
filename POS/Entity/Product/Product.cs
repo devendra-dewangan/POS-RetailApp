@@ -21,13 +21,13 @@ public class Product
     [StringLength(100)]
     [Display(Name = "Barcode")]
     public string Barcode { get; set; } = string.Empty;
-
-    [Display(Name = "Total Stock")]
-    public decimal TotalStock { get; set; } = 0;
     
     [JsonIgnore]
-    public ICollection<ProductBatch> Batches { get; set; } = [];
+    public ICollection<ProductBatch> ProductBatches { get; set; } = [];
 
     [JsonIgnore]
     public ICollection<InvoiceItem> Items { get; set; } = [];
+
+    [JsonIgnore]
+    public ICollection<StockMovement> StockMovements { get; set; } = [];
 }

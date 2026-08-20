@@ -1,9 +1,9 @@
 using Moq;
 using POS.Data;
-using POS.Entity;
 using POS.Services;
 using Microsoft.EntityFrameworkCore;
 using POS.Entity.Person;
+using POS.Entity.Product;
 
 namespace POS.UnitTests.Mocks
 {
