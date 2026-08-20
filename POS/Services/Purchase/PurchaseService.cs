@@ -3,7 +3,7 @@ using POS.Entity.Inovice;
 using POS.Model;
 using POS.Repos;
 using POS.Entity;
-using POS.Constants;
+using POS.Domain;
 
 namespace POS.Services
 {

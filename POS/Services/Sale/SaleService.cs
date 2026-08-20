@@ -1,4 +1,4 @@
-using POS.Constants;
+using POS.Domain;
 using POS.Entity;
 using POS.Entity.Inovice;
 using POS.Entity.Product;

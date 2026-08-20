@@ -1,4 +1,4 @@
-﻿namespace POS.Constants
+﻿namespace POS.Domain
 {
     public static class TransactionMessages
     {

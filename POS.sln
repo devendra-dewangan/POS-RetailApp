@@ -2,11 +2,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS", "POS\POS.csproj", "{1DF88A21-5CAB-415C-DCDE-23CBEF3451D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Api", "POS\POS.Api.csproj", "{1DF88A21-5CAB-415C-DCDE-23CBEF3451D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.UnitTests", "POS.UnitTests\POS.UnitTests.csproj", "{A0D34F03-4F9B-F879-CF93-FFE487294453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Constants", "POS.Constants\POS.Constants.csproj", "{B3E8040E-9836-49A4-B138-94BDCBF5E22A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Domain", "POS.Constants\POS.Domain.csproj", "{B3E8040E-9836-49A4-B138-94BDCBF5E22A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Application", "POS.Application\POS.Application.csproj", "{B2C1F321-3223-411A-A485-4E12ACDF81BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Infrastructure", "POS.Infrastructure\POS.Infrastructure.csproj", "{28D659EB-CBAE-4A98-A604-364A92F01090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +30,14 @@ Global
 		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3E8040E-9836-49A4-B138-94BDCBF5E22A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C1F321-3223-411A-A485-4E12ACDF81BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C1F321-3223-411A-A485-4E12ACDF81BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C1F321-3223-411A-A485-4E12ACDF81BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C1F321-3223-411A-A485-4E12ACDF81BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D659EB-CBAE-4A98-A604-364A92F01090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D659EB-CBAE-4A98-A604-364A92F01090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D659EB-CBAE-4A98-A604-364A92F01090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D659EB-CBAE-4A98-A604-364A92F01090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿using POS.Constants;
+﻿using POS.Domain;
 using POS.Entity.Inovice;
 
 namespace POS.Entity.Product

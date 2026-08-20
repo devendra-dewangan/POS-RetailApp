@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\POS.Constants\POS.Constants.csproj" />
+    <ProjectReference Include="..\POS.Constants\POS.Domain.csproj" />
   </ItemGroup>
 
 </Project>
