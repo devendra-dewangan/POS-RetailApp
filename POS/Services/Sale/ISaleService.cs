@@ -7,6 +7,5 @@ namespace POS.Services
         Task<int> AddSaleAsync(int buyerId);
         Task<IEnumerable<SaleInvoice>?> GetSaleByInvoiceAsync(string invoiceNumber);
         Task<IEnumerable<SaleInvoice>?> GetAllSalesAsync();
-        Task<bool> AddSaleBulkAsync(IEnumerable<SaleInvoice> sales);
     }
 }
