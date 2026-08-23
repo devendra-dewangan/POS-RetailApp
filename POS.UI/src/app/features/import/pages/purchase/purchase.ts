@@ -1,10 +1,11 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-purchase',
   standalone: false,
   templateUrl: './purchase.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './purchase.scss',
 })
 export class Purchase {
@@ -13,9 +14,8 @@ export class Purchase {
     alert(form.value.statusFile);
   }
   submitPurchase(form: NgForm) {
-
     if (!this.selectedFile) {
-      console.log("No file selected");
+      console.log('No file selected');
       return;
     }
 
