@@ -1,12 +1,12 @@
 import { Component, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-purchase',
-  standalone: false,
   templateUrl: './purchase.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './purchase.scss',
+  imports: [FormsModule],
 })
 export class Purchase {
   selectedFile!: File;

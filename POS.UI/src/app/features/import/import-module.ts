@@ -10,7 +10,6 @@ import { Saller } from './pages/saller/saller';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [Purchase, Sale, Product, Buyer, Saller],
-  imports: [CommonModule, ImportRoutingModule, FormsModule],
+  imports: [CommonModule, ImportRoutingModule, FormsModule, Purchase, Sale, Product, Buyer, Saller],
 })
 export class ImportModule {}
