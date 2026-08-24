@@ -1,0 +1,19 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.layout {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+app-sidebar {
+    flex-shrink: 0;
+}
+
+main[tuiNavigationMain] {
+    flex: 1;
+    min-width: 0;
+}

@@ -1,6 +1,9 @@
 :host {
     display: block;
     width: 100%;
-    max-width: 100%;
+}
+
+header[tuiNavigationHeader] {
+    width: 100%;
     box-sizing: border-box;
 }

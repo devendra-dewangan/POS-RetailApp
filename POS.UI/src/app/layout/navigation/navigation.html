@@ -1,0 +1,80 @@
+<nav
+    compact
+    tuiSubheader
+    [style.position]="'sticky'"
+>
+
+    <tui-breadcrumbs [itemsLimit]="10">
+
+        @for (item of breadcrumbs; track item) {
+
+            @if ($last) {
+
+                <strong
+                    *tuiItem
+                    tuiFade
+                >
+                    {{ item }}
+                </strong>
+
+            }
+
+            @if (!$last) {
+
+                <button
+                    *tuiItem
+                    tuiLink
+                    type="button"
+                >
+                    {{ item }}
+                </button>
+
+            }
+
+        }
+
+    </tui-breadcrumbs>
+
+
+    <tui-tabs tuiFade>
+
+        <button
+            tuiTab
+            type="button"
+        >
+            Default view
+        </button>
+
+        <button
+            tuiTab
+            type="button"
+        >
+            Details
+        </button>
+
+        <button
+            tuiTab
+            type="button"
+        >
+            Followers
+        </button>
+
+    </tui-tabs>
+
+
+    <button
+        appearance="secondary"
+        tuiButton
+        type="button"
+    >
+        Secondary
+    </button>
+
+    <button
+        tuiButton
+        type="button"
+    >
+        Primary
+    </button>
+
+</nav>

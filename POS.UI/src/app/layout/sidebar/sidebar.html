@@ -1,0 +1,240 @@
+<aside [tuiNavigationAside]="expanded()">
+
+    <!-- Sidebar header -->
+    <header>
+
+        <button
+            iconStart="@tui.home"
+            type="button"
+            [tuiAsideItem]="hint"
+        >
+
+            <ng-container [ngTemplateOutlet]="hint" />
+
+            <ng-template #hint>
+
+                <span tuiFade>
+                    A very very long product name
+                </span>
+
+                <div
+                    appearance="accent"
+                    tuiBadge
+                >
+                    Alpha
+                </div>
+
+            </ng-template>
+
+        </button>
+
+    </header>
+
+
+    <!-- Search -->
+    <button
+        iconStart="@tui.search"
+        tuiAsideItem
+        type="button"
+    >
+
+        Search
+
+        @if (expanded()) {
+
+            <div
+                appearance="accent"
+                tuiBadge
+            >
+                12
+            </div>
+
+        }
+
+    </button>
+
+
+    <!-- Groups -->
+    <a
+        iconStart="@tui.users"
+        tuiAsideItem
+        [routerLink]="routes.Navigation"
+    >
+        Groups
+    </a>
+
+
+    <!-- Settings -->
+    <tui-aside-group>
+
+        <button
+            automation-id="setting"
+            iconStart="@tui.settings"
+            tuiAsideItem
+            tuiChevron
+            type="button"
+        >
+
+            Settings
+
+            <ng-template>
+
+                <button
+                    tuiAsideItem
+                    type="button"
+                >
+                    Account
+                </button>
+
+                <button
+                    tuiAsideItem
+                    type="button"
+                >
+                    Notifications
+                </button>
+
+                <button
+                    tuiAsideItem
+                    type="button"
+                >
+                    Privacy
+                </button>
+
+            </ng-template>
+
+        </button>
+
+    </tui-aside-group>
+
+
+    <!-- Hint -->
+    <button
+        automation-id="hint"
+        iconStart="@tui.heart"
+        tuiAsideItem
+        type="button"
+    >
+
+        <span tuiFade>
+            By default ellipsis is used but you can use fade too
+        </span>
+
+    </button>
+
+
+    <!-- More -->
+    <button
+        iconEnd="@tui.chevron-right"
+        iconStart="@tui.ellipsis"
+        tuiAsideItem
+        tuiDropdownAuto
+        tuiDropdownHover
+        type="button"
+        [tuiDropdown]="more"
+    >
+
+        More
+
+        <ng-template
+            #more
+            let-close
+        >
+
+            <tui-data-list tuiDataListDropdownManager>
+
+                <button
+                    iconStart="@tui.pencil"
+                    tuiAsideItem
+                    type="button"
+                >
+                    Write
+                </button>
+
+                <button
+                    iconStart="@tui.pie-chart"
+                    tuiAsideItem
+                    type="button"
+                    [tuiDropdown]="submenu"
+                >
+
+                    Categories
+
+                    <ng-template #submenu>
+
+                        <tui-data-list>
+
+                            <button
+                                tuiAsideItem
+                                type="button"
+                                (click)="close()"
+                            >
+                                Fiction (will close menu)
+                            </button>
+
+                            <button
+                                tuiAsideItem
+                                type="button"
+                            >
+                                Non-Fiction
+                            </button>
+
+                            <button
+                                tuiAsideItem
+                                type="button"
+                            >
+                                Children
+                            </button>
+
+                        </tui-data-list>
+
+                    </ng-template>
+
+                </button>
+
+            </tui-data-list>
+
+        </ng-template>
+
+    </button>
+
+
+    <hr />
+
+
+    <!-- Add -->
+    <button
+        iconStart="@tui.plus"
+        tuiAsideItem
+        type="button"
+    >
+        Add
+    </button>
+
+
+    <!-- Sidebar footer -->
+    <footer>
+
+        <button
+            iconStart="@tui.star"
+            tuiAsideItem
+            type="button"
+        >
+            Favorites
+        </button>
+
+        <button
+            tuiAsideItem
+            type="button"
+            [iconStart]="
+                expanded()
+                    ? '@tui.chevron-left'
+                    : '@tui.chevron-right'
+            "
+            (click)="handleToggle()"
+        >
+            {{ expanded() ? 'Collapse' : 'Expand' }}
+        </button>
+
+    </footer>
+
+</aside>

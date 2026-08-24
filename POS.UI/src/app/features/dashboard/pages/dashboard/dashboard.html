@@ -1,1 +1,30 @@
-<p>dashboard works!</p>
+@for (item of [1,2,3,4,5,6,7,8,9,10]; track item) {
+    <div>{{ item }}</div>
+<form appearance="floating" tuiCardLarge tuiForm="m" [style.grid-column]="'2 / span 7'">
+    <header tuiHeader>
+        <h2 tuiTitle>
+            Registration form
+            <span tuiSubtitle>Tell us about yourself</span>
+        </h2>
+    </header>
+    <tui-textfield>
+        <label tuiLabel>Name</label>
+        <input placeholder="John Wick" tuiInput />
+    </tui-textfield>
+    <footer>
+        <button appearance="secondary" tuiButton type="button">
+            Cancel
+        </button>
+        <button tuiButton type="submit">
+            Ok
+        </button>
+    </footer>
+</form>
+<div appearance="outline-grayscale" tuiCardLarge [style.grid-column]="'span 3'">
+    <h2 tuiTitle>
+        Sidebar content
+        <span tuiSubtitle>Use CSS grid to position</span>
+    </h2>
+</div>
+
+}

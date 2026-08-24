@@ -1,0 +1,185 @@
+<header tuiNavigationHeader>
+
+    <!-- Menu / Drawer -->
+    <button
+        portal
+        title="Menu"
+        tuiIconButton
+        tuiNavigationDrawer
+        type="button"
+        [(open)]="open"
+    >
+        <tui-data-list>
+
+            @for (group of drawer | keyvalue; track group) {
+
+                <tui-opt-group [label]="group.key">
+
+                    @for (item of group.value; track item) {
+
+                        <button
+                            tuiOption
+                            type="button"
+                            (click)="open = false"
+                        >
+                            <img
+                                alt="icon"
+                                [src]="item.icon"
+                            />
+
+                            {{ item.name }}
+                        </button>
+
+                    }
+
+                </tui-opt-group>
+
+            }
+
+            <hr />
+
+            <tui-opt-group>
+
+                <label tuiOption>
+
+                    <input
+                        size="s"
+                        tuiSwitch
+                        type="checkbox"
+                        [(ngModel)]="switch"
+                    />
+
+                    Dark mode
+
+                </label>
+
+            </tui-opt-group>
+
+        </tui-data-list>
+    </button>
+
+
+    <!-- Logo -->
+    <span tuiNavigationLogo>
+
+        <tui-icon icon="@tui.home" />
+
+        <span tuiFade>
+            A very very long product name
+        </span>
+
+        <div tuiBadge>
+            Test
+        </div>
+
+    </span>
+
+
+    <!-- Navigation segments -->
+    <span tuiNavigationSegments>
+
+        <button
+            appearance="secondary-grayscale"
+            tuiButton
+            type="button"
+        >
+            Link 1
+        </button>
+
+        <button
+            appearance="secondary-grayscale"
+            tuiButton
+            type="button"
+        >
+            Link 2
+        </button>
+
+        <button
+            appearance="secondary-grayscale"
+            tuiButton
+            tuiChevron
+            tuiDropdownAuto
+            type="button"
+            [tuiDropdown]="products"
+        >
+
+            <span
+                [style.overflow]="'hidden'"
+                [style.text-overflow]="'ellipsis'"
+            >
+                A very very long project
+            </span>
+
+            <ng-template #products>
+
+                <tui-data-list size="s">
+
+                    <button
+                        tuiOption
+                        type="button"
+                    >
+                        A very very long project
+
+                        <tui-icon
+                            icon="@tui.check"
+                            [style.font-size.em]="1"
+                            [style.margin-inline-start.rem]="0.5"
+                        />
+                    </button>
+
+                    <button
+                        tuiOption
+                        type="button"
+                    >
+                        Something else
+                    </button>
+
+                </tui-data-list>
+
+            </ng-template>
+
+        </button>
+
+    </span>
+
+
+    <hr />
+
+
+    <!-- Create -->
+    <button
+        appearance="secondary-grayscale"
+        iconStart="@tui.plus"
+        tuiButton
+        type="button"
+    >
+        Create
+    </button>
+
+
+    <!-- Notifications -->
+    <button
+        iconStart="@tui.bell"
+        tuiIconButton
+        type="button"
+    >
+        Notifications
+
+        <tui-badge-notification />
+    </button>
+
+
+    <!-- More -->
+    <button
+        iconStart="@tui.ellipsis"
+        tuiIconButton
+        type="button"
+    >
+        More
+    </button>
+
+
+    <!-- Avatar -->
+    <div tuiAvatar="AI"></div>
+
+</header>
