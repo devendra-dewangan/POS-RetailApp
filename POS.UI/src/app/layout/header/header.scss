@@ -1,3 +1,13 @@
 :host header[tuiNavigationHeader] {
     width: 100%;
 }
+
+.header-search {
+    inline-size: 20rem;
+}
+
+@media (max-width: 767px) {
+    .header-search {
+        display: none;
+    }
+}

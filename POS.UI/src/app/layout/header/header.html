@@ -1,8 +1,7 @@
 <header tuiNavigationHeader>
 
-    <!-- Menu / Drawer -->
+    <!-- Mobile menu / drawer -->
     <button
-        portal
         title="Menu"
         tuiIconButton
         tuiNavigationDrawer
@@ -10,176 +9,58 @@
         [(open)]="open"
     >
         <tui-data-list>
+            @for (item of navItems; track item.path) {
+                <a
+                    tuiOption
+                    [routerLink]="item.path"
+                    (click)="open = false"
+                >
+                    <tui-icon [icon]="item.icon" />
 
-            @for (group of drawer | keyvalue; track group) {
-
-                <tui-opt-group [label]="group.key">
-
-                    @for (item of group.value; track item) {
-
-                        <button
-                            tuiOption
-                            type="button"
-                            (click)="open = false"
-                        >
-                            <img
-                                alt="icon"
-                                [src]="item.icon"
-                            />
-
-                            {{ item.name }}
-                        </button>
-
-                    }
-
-                </tui-opt-group>
-
+                    {{ item.label }}
+                </a>
             }
-
-            <hr />
-
-            <tui-opt-group>
-
-                <label tuiOption>
-
-                    <input
-                        size="s"
-                        tuiSwitch
-                        type="checkbox"
-                        [(ngModel)]="switch"
-                    />
-
-                    Dark mode
-
-                </label>
-
-            </tui-opt-group>
-
         </tui-data-list>
     </button>
 
+    <!-- Brand -->
+    <a
+        tuiNavigationLogo
+        [routerLink]="['/']"
+    >
+        <tui-icon icon="@tui.store" />
 
-    <!-- Logo -->
-    <span tuiNavigationLogo>
+        <span tuiFade>POS Retail</span>
+    </a>
 
-        <tui-icon icon="@tui.home" />
-
-        <span tuiFade>
-            A very very long product name
-        </span>
-
-        <div tuiBadge>
-            Test
-        </div>
-
-    </span>
-
-
-    <!-- Navigation segments -->
-    <span tuiNavigationSegments>
-
-        <button
-            appearance="secondary-grayscale"
-            tuiButton
-            type="button"
-        >
-            Link 1
-        </button>
-
-        <button
-            appearance="secondary-grayscale"
-            tuiButton
-            type="button"
-        >
-            Link 2
-        </button>
-
-        <button
-            appearance="secondary-grayscale"
-            tuiButton
-            tuiChevron
-            tuiDropdownAuto
-            type="button"
-            [tuiDropdown]="products"
-        >
-
-            <span
-                [style.overflow]="'hidden'"
-                [style.text-overflow]="'ellipsis'"
-            >
-                A very very long project
-            </span>
-
-            <ng-template #products>
-
-                <tui-data-list size="s">
-
-                    <button
-                        tuiOption
-                        type="button"
-                    >
-                        A very very long project
-
-                        <tui-icon
-                            icon="@tui.check"
-                            [style.font-size.em]="1"
-                            [style.margin-inline-start.rem]="0.5"
-                        />
-                    </button>
-
-                    <button
-                        tuiOption
-                        type="button"
-                    >
-                        Something else
-                    </button>
-
-                </tui-data-list>
-
-            </ng-template>
-
-        </button>
-
-    </span>
+    <!-- Search -->
+    <tui-textfield
+        class="header-search"
+        iconStart="@tui.search"
+    >
+        <input
+            placeholder="Search"
+            tuiInput
+            [(ngModel)]="search"
+        />
+    </tui-textfield>
 
 
     <hr />
 
 
-    <!-- Create -->
-    <button
-        appearance="secondary-grayscale"
-        iconStart="@tui.plus"
-        tuiButton
-        type="button"
-    >
-        Create
-    </button>
-
-
     <!-- Notifications -->
     <button
-        iconStart="@tui.bell"
+        title="Notifications"
         tuiIconButton
         type="button"
     >
-        Notifications
+        <tui-icon icon="@tui.bell" />
 
-        <tui-badge-notification />
+        <tui-badge-notification>3</tui-badge-notification>
     </button>
 
-
-    <!-- More -->
-    <button
-        iconStart="@tui.ellipsis"
-        tuiIconButton
-        type="button"
-    >
-        More
-    </button>
-
-
-    <!-- Avatar -->
-    <div tuiAvatar="AI"></div>
+    <!-- Profile -->
+    <div tuiAvatar="AD"></div>
 
 </header>

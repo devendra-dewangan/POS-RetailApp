@@ -1,63 +1,24 @@
-
-import { Component, Directive, signal } from '@angular/core';
-import {TuiAppBar} from '@taiga-ui/layout';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {
-  TuiAsideComponent,
-  TuiAsideItemDirective,
-} from '@taiga-ui/layout/components/navigation';
-import { FormsModule } from '@angular/forms';
-import {TuiPortals, TuiPortalService} from '@taiga-ui/cdk';
-import {
-    TuiButton,
-    TuiDataList,
-    TuiDropdown,
-    TuiInput,
-    TuiPopupService,
-} from '@taiga-ui/core';
-import {
-    TuiBadge,
-    TuiChevron,
-    TuiFade,
-    TuiTabs,
-} from '@taiga-ui/kit';
-import { TuiNavigation} from '@taiga-ui/layout';
-import { NgTemplateOutlet } from '@angular/common';
-
+import { Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TuiFade } from '@taiga-ui/kit';
+import { TuiNavigation } from '@taiga-ui/layout';
+import { NAV_ITEMS } from '../nav-items';
 
 @Component({
-
-  imports: [
-    TuiAppBar,
-    TuiNavigation,
-    RouterLink,
-    RouterLinkActive,
-    TuiAsideComponent,
-    TuiAsideItemDirective,
-    FormsModule,
-    NgTemplateOutlet,
-    RouterLink,
-    TuiBadge,
-    TuiButton,
-    TuiChevron,
-    TuiDataList,
-    TuiDropdown,
-    TuiFade,
-    TuiInput,
-    TuiNavigation,
-    TuiTabs,
-],
-  selector: 'app-sidebar',
-  styleUrl: './sidebar.scss',
-  templateUrl: './sidebar.html',
-  providers: [{provide: TuiPortalService, useClass: TuiPopupService}]
+    imports: [
+        RouterLink,
+        TuiFade,
+        TuiNavigation,
+    ],
+    selector: 'app-sidebar',
+    styleUrl: './sidebar.scss',
+    templateUrl: './sidebar.html',
 })
-export class Sidebar extends TuiPortals  {
-  protected readonly expanded = signal(false);
-    protected readonly routes: any = {};
- 
+export class Sidebar {
+    protected readonly navItems = NAV_ITEMS;
+    protected readonly expanded = signal(false);
+
     protected handleToggle(): void {
-        this.expanded.update((e) => !e);
+        this.expanded.update((expanded) => !expanded);
     }
 }
-
