@@ -1,0 +1,20 @@
+<app-dropdown></app-dropdown>
+<app-date-picker></app-date-picker>
+<tui-textfield [tuiTextfieldCleaner]="false">
+    <input
+        #input
+        placeholder="Input value"
+        tuiInput
+        [(ngModel)]="value"
+    />
+
+    @if (value) {
+        <button
+            tabindex="-1"
+            tuiButtonX
+            (click)="clear()"
+        >
+            Clear
+        </button>
+    }
+</tui-textfield>

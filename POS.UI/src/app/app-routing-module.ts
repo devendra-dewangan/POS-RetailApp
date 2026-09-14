@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'purchase',
         pathMatch: 'full',
       },
       {
@@ -24,6 +24,12 @@ const routes: Routes = [
         loadChildren: () => 
           import('./features/import/import-module')
             .then(m => m.ImportModule)
+      },
+      {
+        path: 'purchase',
+        loadChildren: () => 
+          import('./features/purchase/purchase.routes')
+            .then(m => m.PURCHASE_ROUTES)
       },
     ],
   },

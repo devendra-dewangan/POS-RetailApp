@@ -1,0 +1,18 @@
+<tui-textfield iconEnd="@tui.search">
+    <label tuiLabel>Start typing</label>
+    <input
+        #input
+        placeholder="I am placeholder"
+        tuiInput
+        [(ngModel)]="value"
+    />
+    <tui-icon tuiTooltip="Autocomplete suggestions" />
+    @if (items | tuiFilterByInput; as filtered) {
+        @if (input.value && filtered.length) {
+            <tui-data-list-wrapper
+                *tuiDropdown
+                [items]="filtered"
+            />
+        }
+    }
+</tui-textfield>

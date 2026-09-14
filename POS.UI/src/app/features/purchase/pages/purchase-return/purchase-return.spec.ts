@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Purchase } from './purchase';
+import { PurchaseReturn } from './purchase-return';
 
-describe('Purchase', () => {
-  let component: Purchase;
-  let fixture: ComponentFixture<Purchase>;
+describe('PurchaseReturn', () => {
+  let component: PurchaseReturn;
+  let fixture: ComponentFixture<PurchaseReturn>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Purchase],
+      imports: [PurchaseReturn],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Purchase);
+    fixture = TestBed.createComponent(PurchaseReturn);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

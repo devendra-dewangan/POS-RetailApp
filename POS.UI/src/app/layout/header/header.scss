@@ -1,9 +1,3 @@
-:host {
-    display: block;
+:host header[tuiNavigationHeader] {
     width: 100%;
-}
-
-header[tuiNavigationHeader] {
-    width: 100%;
-    box-sizing: border-box;
 }
