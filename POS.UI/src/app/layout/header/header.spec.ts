@@ -3,6 +3,23 @@ import { RouterModule } from '@angular/router';
 import { Header } from './header';
 
 describe('Header', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      writable: true,
+      value: (query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      }),
+    });
+  });
+
   let component: Header;
   let fixture: ComponentFixture<Header>;
 

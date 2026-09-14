@@ -3,6 +3,23 @@ import { RouterModule } from '@angular/router';
 import { Shell } from './shell';
 
 describe('Shell', () => {
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      configurable: true,
+      writable: true,
+      value: (query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+      }),
+    });
+  });
+
   let component: Shell;
   let fixture: ComponentFixture<Shell>;
 

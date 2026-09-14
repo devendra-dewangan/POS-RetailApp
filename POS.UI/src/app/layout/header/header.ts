@@ -1,8 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TuiButton, TuiDataList, TuiIcon, TuiInput } from '@taiga-ui/core';
-import { TuiAvatar, TuiBadgeNotification, TuiFade } from '@taiga-ui/kit';
+import {
+    TuiButton,
+    TuiDataList,
+    TuiDropdown,
+    TuiIcon,
+    TuiInput,
+    TUI_DARK_MODE,
+} from '@taiga-ui/core';
+import { TuiAvatar, TuiFade } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
 import { NAV_ITEMS } from '../nav-items';
 
@@ -11,9 +19,9 @@ import { NAV_ITEMS } from '../nav-items';
         RouterLink,
         FormsModule,
         TuiAvatar,
-        TuiBadgeNotification,
         TuiButton,
         TuiDataList,
+        TuiDropdown,
         TuiFade,
         TuiIcon,
         TuiInput,
@@ -28,4 +36,26 @@ export class Header {
     protected search = '';
 
     protected readonly navItems = NAV_ITEMS;
+    protected readonly darkMode = inject(TUI_DARK_MODE);
+    protected readonly darkModeIcon = computed(() =>
+        this.darkMode() ? '@tui.sun-moon' : '@tui.moon'
+    );
+
+    private readonly documentRef = inject(DOCUMENT);
+
+    constructor() {
+        effect(() => {
+            const html = this.documentRef.documentElement;
+
+            if (this.darkMode()) {
+                html.setAttribute('tuiTheme', 'dark');
+            } else {
+                html.removeAttribute('tuiTheme');
+            }
+        });
+    }
+
+    protected toggleDarkMode(): void {
+        this.darkMode.update((isDark) => !isDark);
+    }
 }

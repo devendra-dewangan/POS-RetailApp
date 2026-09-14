@@ -2,3 +2,9 @@
     display: flex;
     flex-direction: column;
 }
+
+aside[tuiNavigationAside] {
+    /* Fill only the visible area of the screen (viewport minus header);
+       Taiga already keeps it sticky below the header while scrolling */
+    block-size: calc(100vh - 3rem);
+}

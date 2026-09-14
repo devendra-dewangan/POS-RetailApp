@@ -33,34 +33,98 @@
         <span tuiFade>POS Retail</span>
     </a>
 
-    <!-- Search -->
-    <tui-textfield
-        class="header-search"
-        iconStart="@tui.search"
-    >
-        <input
-            placeholder="Search"
-            tuiInput
-            [(ngModel)]="search"
-        />
-    </tui-textfield>
-
 
     <hr />
 
 
-    <!-- Notifications -->
+    <!-- Search -->
     <button
-        title="Notifications"
+        title="Search"
         tuiIconButton
         type="button"
+        [tuiDropdown]="searchPopup"
     >
-        <tui-icon icon="@tui.bell" />
+        <tui-icon icon="@tui.search" />
+    </button>
 
-        <tui-badge-notification>3</tui-badge-notification>
+    <!-- Dark mode -->
+    <button
+        title="Toggle dark mode"
+        tuiIconButton
+        type="button"
+        (click)="toggleDarkMode()"
+    >
+        <tui-icon [icon]="darkModeIcon()" />
+    </button>
+
+    <!-- Settings -->
+    <button
+        title="Settings"
+        tuiIconButton
+        type="button"
+        [tuiDropdown]="settingsMenu"
+    >
+        <tui-icon icon="@tui.settings" />
     </button>
 
     <!-- Profile -->
-    <div tuiAvatar="AD"></div>
+    <div
+        tuiAvatar="AD"
+        title="Profile"
+        [tuiDropdown]="profileMenu"
+    ></div>
+
+
+    <!-- Dropdown content -->
+    <ng-template #searchPopup>
+        <tui-textfield
+            class="search-popup"
+            iconStart="@tui.search"
+        >
+            <input
+                placeholder="Search"
+                tuiInput
+                [(ngModel)]="search"
+            />
+        </tui-textfield>
+    </ng-template>
+
+    <ng-template #settingsMenu>
+        <tui-data-list size="s">
+            <button
+                tuiOption
+                type="button"
+            >
+                Preferences
+            </button>
+            <button
+                tuiOption
+                type="button"
+            >
+                About
+            </button>
+        </tui-data-list>
+    </ng-template>
+
+    <ng-template #profileMenu>
+        <tui-data-list size="s">
+            <a
+                tuiOption
+                [routerLink]="['/']"
+            >
+                <tui-icon icon="@tui.user" />
+
+                My profile
+            </a>
+            <button
+                tuiOption
+                type="button"
+            >
+                <tui-icon icon="@tui.log-out" />
+
+                Log out
+            </button>
+        </tui-data-list>
+    </ng-template>
 
 </header>

@@ -2,12 +2,12 @@
     width: 100%;
 }
 
-.header-search {
-    inline-size: 20rem;
+.search-popup {
+    inline-size: 18rem;
 }
 
 @media (max-width: 767px) {
-    .header-search {
-        display: none;
+    .search-popup {
+        inline-size: 100%;
     }
 }
